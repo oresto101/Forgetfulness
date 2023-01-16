@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Table
+@Table(name = "group_table")
 @Data
 @Entity
 @NoArgsConstructor
