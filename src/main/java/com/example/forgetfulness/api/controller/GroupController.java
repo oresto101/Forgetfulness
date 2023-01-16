@@ -1,6 +1,7 @@
-package com.example.forgetfulness.api.group;
+package com.example.forgetfulness.api.controller;
 
-import com.example.forgetfulness.application.group.GroupService;
+import com.example.forgetfulness.api.DTO.request.CreateGroupRequest;
+import com.example.forgetfulness.application.service.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

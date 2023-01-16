@@ -1,6 +1,8 @@
-package com.example.forgetfulness.application.user;
+package com.example.forgetfulness.application.service;
 
-import com.example.forgetfulness.api.user.CreateUserRequest;
+import com.example.forgetfulness.api.DTO.request.CreateUserRequest;
+import com.example.forgetfulness.application.entity.User;
+import com.example.forgetfulness.application.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
@@ -20,11 +22,11 @@ public class UserService {
     public void addUser(final CreateUserRequest createUserRequest) {
         if (userRepository.findByEmailExists(createUserRequest.getEmail()))
             throw new HttpClientErrorException(HttpStatus.CONFLICT, "Student found");
-        final UserEntity userEntity = conversionService.convert(createUserRequest, UserEntity.class);
-        userRepository.save(userEntity);
+        final User user = conversionService.convert(createUserRequest, User.class);
+        userRepository.save(user);
     }
 
-    public List<UserEntity> getUsersByUsernames(final List<String> usernames){
+    public List<User> getUsersByUsernames(final List<String> usernames){
         return usernames.stream()
                 .filter(userRepository::findByUsernameExists)
                 .map(userRepository::getByUsername)

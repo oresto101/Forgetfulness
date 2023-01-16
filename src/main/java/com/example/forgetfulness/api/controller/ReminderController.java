@@ -1,6 +1,5 @@
-package com.example.forgetfulness.api.reminder;
+package com.example.forgetfulness.api.controller;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 

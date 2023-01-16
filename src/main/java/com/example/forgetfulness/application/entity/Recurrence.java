@@ -1,17 +1,19 @@
-package com.example.forgetfulness.application.reminder;
+package com.example.forgetfulness.application.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
+@Table
 @Data
 @Entity
 @NoArgsConstructor
-@Builder
-public class ReminderEntity {
+@AllArgsConstructor
+public class Recurrence {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 }

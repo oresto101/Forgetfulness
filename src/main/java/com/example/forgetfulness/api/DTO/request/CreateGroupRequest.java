@@ -1,4 +1,4 @@
-package com.example.forgetfulness.api.reminder;
+package com.example.forgetfulness.api.DTO.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,5 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateReminderRequest {
+public class CreateGroupRequest {
+    private String name;
+    private String description;
 }

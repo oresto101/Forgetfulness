@@ -1,24 +1,31 @@
-package com.example.forgetfulness.application.group;
+package com.example.forgetfulness.application.entity;
 
-import com.example.forgetfulness.application.user.UserEntity;
 import jakarta.persistence.*;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Table
 @Data
 @Entity
 @NoArgsConstructor
-@Builder
-public class GroupEntity {
+@AllArgsConstructor
+public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "users")
     @OneToMany
-    private List<UserEntity> users;
+    private List<User> users;
 }

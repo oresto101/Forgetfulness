@@ -1,5 +1,6 @@
-package com.example.forgetfulness.application.reminder;
+package com.example.forgetfulness.application.service;
 
+import com.example.forgetfulness.application.repository.ReminderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

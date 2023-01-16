@@ -1,7 +1,7 @@
-package com.example.forgetfulness.api.user;
+package com.example.forgetfulness.api.controller;
 
-import com.example.forgetfulness.application.user.UserService;
-import lombok.AllArgsConstructor;
+import com.example.forgetfulness.api.DTO.request.CreateUserRequest;
+import com.example.forgetfulness.application.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,4 +1,4 @@
-package com.example.forgetfulness.api.user;
+package com.example.forgetfulness.api.DTO.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

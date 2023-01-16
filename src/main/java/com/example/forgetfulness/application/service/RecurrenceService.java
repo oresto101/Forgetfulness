@@ -1,6 +1,6 @@
-package com.example.forgetfulness.application.recurrence;
+package com.example.forgetfulness.application.service;
 
-import lombok.AllArgsConstructor;
+import com.example.forgetfulness.application.repository.RecurrenceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,15 +1,16 @@
-package com.example.forgetfulness.application.user;
+package com.example.forgetfulness.application.mapper;
 
-import com.example.forgetfulness.api.user.CreateUserRequest;
+import com.example.forgetfulness.api.DTO.request.CreateUserRequest;
+import com.example.forgetfulness.application.entity.User;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CreateUserRequestToUserEntityConverter implements Converter<CreateUserRequest, UserEntity> {
+public class CreateUserRequestToUserEntityConverter implements Converter<CreateUserRequest, User> {
 
     @Override
-    public UserEntity convert(final CreateUserRequest createUserRequest) {
-        return UserEntity.builder()
+    public User convert(final CreateUserRequest createUserRequest) {
+        return User.builder()
                 .username(createUserRequest.getUsername())
                 .password(createUserRequest.getPassword())
                 .name(createUserRequest.getName())
