@@ -7,6 +7,5 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class RecurrenceService {
-
     private final RecurrenceRepository recurrenceRepository;
 }
