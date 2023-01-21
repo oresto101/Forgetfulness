@@ -49,21 +49,25 @@ public class ReminderController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createReminder(@RequestBody ReminderRequest reminderRequest) {
-        reminderService.save(reminderMapper.reminderRequestToReminder(reminderRequest));
+    public ResponseEntity<ReminderResponse> createReminder(@RequestBody ReminderRequest reminderRequest) {
+        ReminderResponse reminderResponse = reminderMapper.reminderToReminderResponse(
+                reminderService.save(
+                        reminderMapper.reminderRequestToReminder(reminderRequest)));
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(reminderResponse);
     }
 
     @PutMapping
-    public ResponseEntity<String> updateReminder(@RequestBody ReminderRequest reminderRequest) {
-        reminderService.update(reminderMapper.reminderRequestToReminder(reminderRequest));
+    public ResponseEntity<ReminderResponse> updateReminder(@RequestBody ReminderRequest reminderRequest) {
+        ReminderResponse reminderResponse = reminderMapper.reminderToReminderResponse(
+                reminderService.update(
+                        reminderMapper.reminderRequestToReminder(reminderRequest)));
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(reminderResponse);
     }
 
     @DeleteMapping("/{id}")

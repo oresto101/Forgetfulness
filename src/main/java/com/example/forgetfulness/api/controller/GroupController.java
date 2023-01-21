@@ -49,21 +49,26 @@ public class GroupController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createGroup(@RequestBody GroupRequest groupRequest) {
-        groupService.save(groupMapper.groupRequestToGroup(groupRequest));
+    public ResponseEntity<GroupResponse> createGroup(@RequestBody GroupRequest groupRequest) {
+        GroupResponse groupResponse = groupMapper.groupToGroupResponse(
+                groupService.save(
+                        groupMapper.groupRequestToGroup(groupRequest)));
+
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(groupResponse);
     }
 
     @PutMapping
-    public ResponseEntity<String> updateGroup(@RequestBody GroupRequest groupRequest) {
-        groupService.update(groupMapper.groupRequestToGroup(groupRequest));
+    public ResponseEntity<GroupResponse> updateGroup(@RequestBody GroupRequest groupRequest) {
+        GroupResponse groupResponse = groupMapper.groupToGroupResponse(
+                groupService.update(
+                        groupMapper.groupRequestToGroup(groupRequest)));
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(groupResponse);
     }
 
     @DeleteMapping("/{id}")

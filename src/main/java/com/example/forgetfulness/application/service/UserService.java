@@ -23,17 +23,17 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public void save(User User) {
+    public User save(User User) {
         if (User.isIdNull()) {
-            userRepository.save(User);
+            return userRepository.save(User);
         }
 
         throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
     }
 
-    public void update(User User) {
+    public User update(User User) {
         if (User.isIdNotNull()) {
-            userRepository.save(User);
+            return userRepository.save(User);
         }
 
         throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);

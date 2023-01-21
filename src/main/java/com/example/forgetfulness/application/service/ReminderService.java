@@ -3,6 +3,7 @@ package com.example.forgetfulness.application.service;
 import com.example.forgetfulness.application.entity.Reminder;
 import com.example.forgetfulness.application.exception.ForgetfulnessException;
 import com.example.forgetfulness.application.exception.ForgetfulnessExceptionType;
+import com.example.forgetfulness.application.repository.RecurrenceRepository;
 import com.example.forgetfulness.application.repository.ReminderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,17 +24,17 @@ public class ReminderService {
         return reminderRepository.findById(id);
     }
 
-    public void save(Reminder Reminder) {
-        if (Reminder.isIdNull()) {
-            reminderRepository.save(Reminder);
+    public Reminder save(Reminder reminder) {
+        if (reminder.isIdNull()) {
+            return reminderRepository.save(reminder);
         }
 
         throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
     }
 
-    public void update(Reminder Reminder) {
-        if (Reminder.isIdNotNull()) {
-            reminderRepository.save(Reminder);
+    public Reminder update(Reminder reminder) {
+        if (reminder.isIdNotNull()) {
+            return reminderRepository.save(reminder);
         }
 
         throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);

@@ -23,17 +23,17 @@ public class GroupService {
         return groupRepository.findById(id);
     }
 
-    public void save(Group Group) {
+    public Group save(Group Group) {
         if (Group.isIdNull()) {
-            groupRepository.save(Group);
+            return groupRepository.save(Group);
         }
 
         throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
     }
 
-    public void update(Group Group) {
+    public Group update(Group Group) {
         if (Group.isIdNotNull()) {
-            groupRepository.save(Group);
+            return groupRepository.save(Group);
         }
 
         throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);

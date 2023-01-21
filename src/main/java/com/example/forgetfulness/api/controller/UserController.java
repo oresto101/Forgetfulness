@@ -49,21 +49,25 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody UserRequest userRequest) {
-        userService.save(userMapper.userRequestToUser(userRequest));
+    public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest) {
+        UserResponse userResponse = userMapper.userToUserResponse(
+                userService.save(
+                        userMapper.userRequestToUser(userRequest)));
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(userResponse);
     }
 
     @PutMapping
-    public ResponseEntity<String> updateUser(@RequestBody UserRequest userRequest) {
-        userService.update(userMapper.userRequestToUser(userRequest));
+    public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest userRequest) {
+        UserResponse userResponse = userMapper.userToUserResponse(
+                userService.update(
+                        userMapper.userRequestToUser(userRequest)));
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(userResponse);
     }
 
     @DeleteMapping("/{id}")
