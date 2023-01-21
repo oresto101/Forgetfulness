@@ -1,11 +1,12 @@
 package com.example.forgetfulness.api.DTO.request;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@Builder
-public class CreateReminderRequest {
+public class RecurrenceRequest {
+    private Long id;
+    private Long period;
+    private Long reminderId;
 }

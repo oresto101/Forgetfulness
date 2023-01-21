@@ -1,15 +1,17 @@
 package com.example.forgetfulness.api.DTO.request;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class CreateGroupRequest {
+public class UserRequest {
+    private Long id;
+    private String password;
     private String name;
-    private String description;
+    private String username;
+    private String surname;
+    private String email;
 }
