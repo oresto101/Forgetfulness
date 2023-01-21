@@ -19,10 +19,6 @@ public class Recurrence {
     @Column(name = "period")
     private Long period;
 
-    @OneToOne
-    @JoinColumn(name = "id")
-    private Reminder reminder;
-
     public boolean isIdNull() {
         return id == null;
     }

@@ -28,7 +28,7 @@ public class Reminder {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @OneToOne(mappedBy = "reminder")
+    @ManyToOne
     private Recurrence recurrence;
 
     public boolean isIdNull() {
