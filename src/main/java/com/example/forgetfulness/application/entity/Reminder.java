@@ -30,4 +30,12 @@ public class Reminder {
 
     @OneToOne(mappedBy = "reminder")
     private Recurrence recurrence;
+
+    public boolean isIdNull() {
+        return id == null;
+    }
+
+    public boolean isIdNotNull() {
+        return !isIdNull();
+    }
 }

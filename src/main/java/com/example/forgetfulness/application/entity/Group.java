@@ -13,7 +13,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Group {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -30,4 +29,12 @@ public class Group {
 
     @OneToMany
     private Set<Reminder> reminders;
+
+    public boolean isIdNull() {
+        return id == null;
+    }
+
+    public boolean isIdNotNull() {
+        return !isIdNull();
+    }
 }

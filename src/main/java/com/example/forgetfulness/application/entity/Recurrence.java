@@ -22,4 +22,12 @@ public class Recurrence {
     @OneToOne
     @JoinColumn(name = "id")
     private Reminder reminder;
+
+    public boolean isIdNull() {
+        return id == null;
+    }
+
+    public boolean isIdNotNull() {
+        return !isIdNull();
+    }
 }

@@ -35,4 +35,12 @@ public class User {
 
     @OneToMany
     private Set<Reminder> reminders;
+
+    public boolean isIdNull() {
+        return id == null;
+    }
+
+    public boolean isIdNotNull() {
+        return !isIdNull();
+    }
 }
