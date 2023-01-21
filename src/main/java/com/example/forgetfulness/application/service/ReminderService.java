@@ -1,5 +1,6 @@
 package com.example.forgetfulness.application.service;
 
+import com.example.forgetfulness.application.entity.Recurrence;
 import com.example.forgetfulness.application.entity.Reminder;
 import com.example.forgetfulness.application.exception.ForgetfulnessException;
 import com.example.forgetfulness.application.exception.ForgetfulnessExceptionType;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ReminderService {
     private final ReminderRepository reminderRepository;
+    private final RecurrenceRepository recurrenceRepository;
 
     public List<Reminder> getAllReminders() {
         return reminderRepository.findAll();
@@ -26,6 +28,11 @@ public class ReminderService {
 
     public Reminder save(Reminder reminder) {
         if (reminder.isIdNull()) {
+            Optional<Recurrence> recurrence = recurrenceRepository.getTopByPeriod(reminder.getRecurrence().getPeriod());
+            if (recurrence.isEmpty()) {
+                recurrence = Optional.of(recurrenceRepository.save(reminder.getRecurrence()));
+            }
+            reminder.setRecurrence(recurrence.get());
             return reminderRepository.save(reminder);
         }
 
@@ -34,6 +41,11 @@ public class ReminderService {
 
     public Reminder update(Reminder reminder) {
         if (reminder.isIdNotNull()) {
+            Optional<Recurrence> recurrence = recurrenceRepository.getTopByPeriod(reminder.getRecurrence().getPeriod());
+            if (recurrence.isEmpty()) {
+                recurrence = Optional.of(recurrenceRepository.save(reminder.getRecurrence()));
+            }
+            reminder.setRecurrence(recurrence.get());
             return reminderRepository.save(reminder);
         }
 
@@ -41,10 +53,17 @@ public class ReminderService {
     }
 
     public void delete(Long id) {
-        if (id == null) {
+        Optional<Reminder> reminder = getReminderById(id);
+
+        if (reminder.isEmpty()) {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
         }
 
-        reminderRepository.deleteById(id);
+        reminderRepository.delete(reminder.get());
+
+        List<Reminder> remindersWithRecurrence = reminderRepository.findAllByRecurrence(reminder.get().getRecurrence());
+        if (remindersWithRecurrence.isEmpty()) {
+            recurrenceRepository.delete(reminder.get().getRecurrence());
+        }
     }
 }

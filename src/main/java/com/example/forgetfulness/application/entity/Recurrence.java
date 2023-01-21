@@ -16,7 +16,7 @@ public class Recurrence {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "period")
+    @Column(name = "period", unique = true)
     private Long period;
 
     public boolean isIdNull() {
