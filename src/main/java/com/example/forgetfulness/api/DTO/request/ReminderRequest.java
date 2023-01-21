@@ -9,5 +9,5 @@ public class ReminderRequest {
     private Long id;
     private String name;
     private String description;
-    private Long recurrenceId;
+    private Long period;
 }
