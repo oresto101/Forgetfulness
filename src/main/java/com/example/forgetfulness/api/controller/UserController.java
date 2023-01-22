@@ -59,17 +59,6 @@ public class UserController {
                 .body(userResponse);
     }
 
-    @PutMapping
-    public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest userRequest) {
-        UserResponse userResponse = userMapper.userToUserResponse(
-                userService.update(
-                        userMapper.userRequestToUser(userRequest)));
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(userResponse);
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable("id") Long id) {
         userService.delete(id);

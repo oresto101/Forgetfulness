@@ -24,19 +24,11 @@ public class UserService {
     }
 
     public User save(User User) {
-        if (User.isIdNull()) {
-            return userRepository.save(User);
-        }
-
-        throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
-    }
-
-    public User update(User User) {
         if (User.isIdNotNull()) {
-            return userRepository.save(User);
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
         }
 
-        throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
+        return userRepository.save(User);
     }
 
     public void delete(Long id) {

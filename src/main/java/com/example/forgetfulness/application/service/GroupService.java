@@ -24,19 +24,11 @@ public class GroupService {
     }
 
     public Group save(Group Group) {
-        if (Group.isIdNull()) {
-            return groupRepository.save(Group);
-        }
-
-        throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
-    }
-
-    public Group update(Group Group) {
         if (Group.isIdNotNull()) {
-            return groupRepository.save(Group);
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
         }
 
-        throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
+        return groupRepository.save(Group);
     }
 
     public void delete(Long id) {

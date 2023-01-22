@@ -60,17 +60,6 @@ public class GroupController {
                 .body(groupResponse);
     }
 
-    @PutMapping
-    public ResponseEntity<GroupResponse> updateGroup(@RequestBody GroupRequest groupRequest) {
-        GroupResponse groupResponse = groupMapper.groupToGroupResponse(
-                groupService.update(
-                        groupMapper.groupRequestToGroup(groupRequest)));
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(groupResponse);
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteGroup(@PathVariable("id") Long id) {
         groupService.delete(id);
