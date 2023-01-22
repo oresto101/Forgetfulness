@@ -23,6 +23,10 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
     public User save(User userRequest) {
         if (userRequest.isIdNotNull()) {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.USER_ALREADY_EXISTS);

@@ -3,6 +3,8 @@ package com.example.forgetfulness.api.controller;
 import com.example.forgetfulness.api.DTO.request.UserRequest;
 import com.example.forgetfulness.api.DTO.response.UserResponse;
 import com.example.forgetfulness.application.entity.User;
+import com.example.forgetfulness.application.exception.ForgetfulnessException;
+import com.example.forgetfulness.application.exception.ForgetfulnessExceptionType;
 import com.example.forgetfulness.application.mapper.UserMapper;
 import com.example.forgetfulness.application.service.UserService;
 import lombok.AllArgsConstructor;
@@ -66,5 +68,21 @@ public class UserController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserResponse> loginUser(@RequestBody UserRequest userRequest) {
+        Optional<User> userByEmail = userService.getUserByEmail(userRequest.getEmail());
+        if (userByEmail.isEmpty()) {
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.NO_USER);
+        }
+
+        if (!userByEmail.get().getPassword().equals(userRequest.getPassword())) {
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.INCORRECT_CREDENTIALS);
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userMapper.userToUserResponse(userByEmail.get()));
     }
 }
