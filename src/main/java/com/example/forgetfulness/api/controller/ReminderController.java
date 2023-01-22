@@ -51,7 +51,7 @@ public class ReminderController {
     @PostMapping
     public ResponseEntity<ReminderResponse> createReminder(@RequestBody ReminderRequest reminderRequest) {
         ReminderResponse reminderResponse = reminderMapper.reminderToReminderResponse(
-                reminderService.save(
+                reminderService.create(
                         reminderMapper.reminderRequestToReminder(reminderRequest)));
 
         return ResponseEntity

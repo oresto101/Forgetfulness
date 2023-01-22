@@ -1,5 +1,6 @@
 package com.example.forgetfulness.application.service;
 
+import com.example.forgetfulness.application.entity.Reminder;
 import com.example.forgetfulness.application.entity.User;
 import com.example.forgetfulness.application.exception.ForgetfulnessException;
 import com.example.forgetfulness.application.exception.ForgetfulnessExceptionType;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final ReminderService reminderService;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -41,11 +43,44 @@ public class UserService {
     }
 
     public void delete(Long id) {
+        userRepository.delete(getValidatedUser(id));
+    }
+
+    public void addReminder(Long userId, Reminder reminderRequest) {
+        if (userId == null || reminderRequest.isIdNotNull()) {
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
+        }
+
+        User user = getValidatedUser(userId);
+        Reminder reminder = reminderService.create(reminderRequest);
+
+        user.getReminders().add(reminder);
+        userRepository.save(user);
+    }
+
+    public void deleteReminder(Long userId, Long reminderId) {
+        if (userId == null || reminderId == null) {
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
+        }
+
+        User user = getValidatedUser(userId);
+        Optional<Reminder> reminder = reminderService.getReminderById(reminderId);
+        if (reminder.isEmpty()) {
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.NO_REMINDER);
+        }
+
+        user.getReminders().remove(reminder.get());
+        userRepository.save(user);
+
+        reminderService.delete(reminder.get().getId());
+    }
+
+
+    private User getValidatedUser(Long id) {
         Optional<User> user = userRepository.findById(id);
         if (user.isEmpty()) {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.NO_USER);
         }
-
-        userRepository.deleteById(id);
+        return user.get();
     }
 }

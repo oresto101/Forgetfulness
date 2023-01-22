@@ -26,7 +26,7 @@ public class ReminderService {
         return reminderRepository.findById(id);
     }
 
-    public Reminder save(Reminder reminder) {
+    public Reminder create(Reminder reminder) {
         if (reminder.isIdNotNull()) {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.REMINDER_ALREADY_EXISTS);
         }
