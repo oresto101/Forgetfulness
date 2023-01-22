@@ -149,5 +149,17 @@ public class UserController {
                 .build();
     }
 
-    //TODO: get reminders by user id
+
+    @GetMapping("/{userId}/reminders")
+    public ResponseEntity<List<ReminderResponse>> getUserReminders(@PathVariable("userId") Long userId) {
+        List<ReminderResponse> list = userService
+                .getUserReminders(userId)
+                .stream()
+                .map(reminderMapper::reminderToReminderResponse)
+                .collect(Collectors.toList());
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(list);
+    }
 }

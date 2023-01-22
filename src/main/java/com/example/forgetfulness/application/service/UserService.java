@@ -8,6 +8,7 @@ import com.example.forgetfulness.application.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,6 +76,15 @@ public class UserService {
         userRepository.save(user);
 
         reminderService.delete(reminder.get().getId());
+    }
+
+    public List<Reminder> getUserReminders(Long userId) {
+        if (userId == null) {
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
+        }
+        User user = getValidatedUser(userId);
+
+        return new ArrayList<>(user.getReminders());
     }
 
 
