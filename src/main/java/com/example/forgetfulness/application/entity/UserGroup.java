@@ -30,4 +30,12 @@ public class UserGroup {
                 group == null || group.isIdNull() ||
                 compositeId.isIdNull();
     }
+
+    public UserGroup(Long userId, Long groupId) {
+        this.compositeId = new UserGroupCompositeKey(userId, groupId);
+        this.user = new User();
+        this.user.setId(userId);
+        this.group = new Group();
+        this.group.setId(groupId);
+    }
 }

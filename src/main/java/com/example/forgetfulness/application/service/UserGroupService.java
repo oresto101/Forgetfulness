@@ -3,6 +3,7 @@ package com.example.forgetfulness.application.service;
 import com.example.forgetfulness.application.entity.Group;
 import com.example.forgetfulness.application.entity.User;
 import com.example.forgetfulness.application.entity.UserGroup;
+import com.example.forgetfulness.application.entity.compositeKey.UserGroupCompositeKey;
 import com.example.forgetfulness.application.exception.ForgetfulnessException;
 import com.example.forgetfulness.application.exception.ForgetfulnessExceptionType;
 import com.example.forgetfulness.application.repository.GroupRepository;
@@ -20,31 +21,33 @@ public class UserGroupService {
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
 
-    public void save(UserGroup request) {
-        if (request.isIdNull()) {
+    public void save(Long userId, Long groupId) {
+        if (userId == null || groupId == null) {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
         }
 
-        Optional<UserGroup> userGroup = userGroupRepository.findById(request.getCompositeId());
+        UserGroup userGroupRequest = new UserGroup(userId, groupId);
+
+        Optional<UserGroup> userGroup = userGroupRepository.findById(userGroupRequest.getCompositeId());
         if (userGroup.isPresent()) {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.USER_IN_GROUP);
         }
 
-        Optional<User> user = userRepository.findById(request.getUser().getId());
+        Optional<User> user = userRepository.findById(userId);
         if (user.isEmpty()) {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.NO_USER);
         }
 
-        Optional<Group> group = groupRepository.findById(request.getGroup().getId());
+        Optional<Group> group = groupRepository.findById(groupId);
         if (group.isEmpty()) {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.NO_GROUP);
         }
 
-        userGroupRepository.save(request);
+        userGroupRepository.save(userGroupRequest);
     }
 
-    public void delete(UserGroup request) {
-        Optional<UserGroup> userGroup = userGroupRepository.findById(request.getCompositeId());
+    public void delete(Long userId, Long groupId) {
+        Optional<UserGroup> userGroup = userGroupRepository.findById(new UserGroupCompositeKey(userId, groupId));
         if (userGroup.isEmpty()) {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.USER_NOT_IN_GROUP);
         }

@@ -1,14 +1,12 @@
 package com.example.forgetfulness.api.controller;
 
 import com.example.forgetfulness.api.DTO.request.ReminderRequest;
-import com.example.forgetfulness.api.DTO.request.UserGroupRequest;
 import com.example.forgetfulness.api.DTO.request.UserRequest;
 import com.example.forgetfulness.api.DTO.response.UserResponse;
 import com.example.forgetfulness.application.entity.User;
 import com.example.forgetfulness.application.exception.ForgetfulnessException;
 import com.example.forgetfulness.application.exception.ForgetfulnessExceptionType;
 import com.example.forgetfulness.application.mapper.ReminderMapper;
-import com.example.forgetfulness.application.mapper.UserGroupMapper;
 import com.example.forgetfulness.application.mapper.UserMapper;
 import com.example.forgetfulness.application.service.UserGroupService;
 import com.example.forgetfulness.application.service.UserService;
@@ -28,7 +26,6 @@ public class UserController {
     private final UserService userService;
     private final UserGroupService userGroupService;
     private final UserMapper userMapper;
-    private final UserGroupMapper userGroupMapper;
     private final ReminderMapper reminderMapper;
 
     @GetMapping
@@ -94,18 +91,18 @@ public class UserController {
                 .body(userMapper.userToUserResponse(userByEmail.get()));
     }
 
-    @PostMapping("/add/group") //TODO: change to GET user/{userId}/add/group/{gorupId}
-    public ResponseEntity<String> addUserToGroup(@RequestBody UserGroupRequest userGroupRequest) {
-        userGroupService.save(userGroupMapper.userGroupRequestToUserGroup(userGroupRequest));
+    @PutMapping("/{userId}/add/group/{groupId}")
+    public ResponseEntity<String> addUserToGroup(@PathVariable("userId") Long userId, @PathVariable("groupId") Long groupId) {
+        userGroupService.save(userId, groupId);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
     }
 
-    @PostMapping("/delete/group") //TODO: change to DELETE user/{userId}/add/group/{gorupId}
-    public ResponseEntity<String> deleteUserFromGroup(@RequestBody UserGroupRequest userGroupRequest) {
-        userGroupService.delete(userGroupMapper.userGroupRequestToUserGroup(userGroupRequest));
+    @DeleteMapping("/{userId}/delete/group/{groupId}")
+    public ResponseEntity<String> deleteUserFromGroup(@PathVariable("userId") Long userId, @PathVariable("groupId") Long groupId) {
+        userGroupService.delete(userId, groupId);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
