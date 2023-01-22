@@ -46,7 +46,7 @@ public class UserService {
         userRepository.delete(getValidatedUser(id));
     }
 
-    public void addReminder(Long userId, Reminder reminderRequest) {
+    public Reminder addReminder(Long userId, Reminder reminderRequest) {
         if (userId == null || reminderRequest.isIdNotNull()) {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
         }
@@ -56,6 +56,8 @@ public class UserService {
 
         user.getReminders().add(reminder);
         userRepository.save(user);
+
+        return reminder;
     }
 
     public void deleteReminder(Long userId, Long reminderId) {

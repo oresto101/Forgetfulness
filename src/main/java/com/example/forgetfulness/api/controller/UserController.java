@@ -2,7 +2,9 @@ package com.example.forgetfulness.api.controller;
 
 import com.example.forgetfulness.api.DTO.request.ReminderRequest;
 import com.example.forgetfulness.api.DTO.request.UserRequest;
+import com.example.forgetfulness.api.DTO.response.ReminderResponse;
 import com.example.forgetfulness.api.DTO.response.UserResponse;
+import com.example.forgetfulness.application.entity.Reminder;
 import com.example.forgetfulness.application.entity.User;
 import com.example.forgetfulness.application.exception.ForgetfulnessException;
 import com.example.forgetfulness.application.exception.ForgetfulnessExceptionType;
@@ -110,12 +112,12 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/add/reminder")
-    public ResponseEntity<String> addReminderToUser(@PathVariable("userId") Long userid, @RequestBody ReminderRequest reminderRequest) {
-        userService.addReminder(userid, reminderMapper.reminderRequestToReminder(reminderRequest));
+    public ResponseEntity<ReminderResponse> addReminderToUser(@PathVariable("userId") Long userid, @RequestBody ReminderRequest reminderRequest) {
+        Reminder reminder = userService.addReminder(userid, reminderMapper.reminderRequestToReminder(reminderRequest));
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(reminderMapper.reminderToReminderResponse(reminder));
     }
 
     @DeleteMapping("/{userId}/delete/reminder/{reminderId}")
