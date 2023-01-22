@@ -12,7 +12,9 @@ import com.example.forgetfulness.application.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -53,5 +55,21 @@ public class UserGroupService {
         }
 
         userGroupRepository.delete(userGroup.get());
+    }
+
+    public List<Group> getUserGroups(Long userId) {
+        if (userId == null) {
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
+        }
+
+        return userGroupRepository
+                .findAllByUserId(userId)
+                .stream()
+                .map(userGroup -> groupRepository
+                        .findById(userGroup
+                                .getGroup()
+                                .getId())
+                        .orElseThrow())
+                .collect(Collectors.toList());
     }
 }
