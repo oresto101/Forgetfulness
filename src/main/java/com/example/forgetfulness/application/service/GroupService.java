@@ -32,7 +32,8 @@ public class GroupService {
     }
 
     public void delete(Long id) {
-        if (id == null) {
+        Optional<Group> group = groupRepository.findById(id);
+        if (group.isEmpty()) {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.NO_GROUP);
         }
 
