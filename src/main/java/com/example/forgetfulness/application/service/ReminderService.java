@@ -39,14 +39,20 @@ public class ReminderService {
         throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
     }
 
-    public Reminder update(Reminder reminder) {
-        if (reminder.isIdNotNull()) {
-            Optional<Recurrence> recurrence = recurrenceRepository.getTopByPeriod(reminder.getRecurrence().getPeriod());
-            if (recurrence.isEmpty()) {
-                recurrence = Optional.of(recurrenceRepository.save(reminder.getRecurrence()));
+    public Reminder update(Reminder reminderRequest) {
+        if (reminderRequest.isIdNotNull()) {
+            Optional<Reminder> reminder = getReminderById(reminderRequest.getId());
+            if (reminder.isEmpty()) {
+                throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
             }
-            reminder.setRecurrence(recurrence.get());
-            return reminderRepository.save(reminder);
+
+            Optional<Recurrence> recurrence = recurrenceRepository.getTopByPeriod(reminderRequest.getRecurrence().getPeriod());
+            if (recurrence.isEmpty()) {
+                recurrence = Optional.of(recurrenceRepository.save(reminderRequest.getRecurrence()));
+            }
+            reminderRequest.setRecurrence(recurrence.get());
+
+            return reminderRepository.save(reminderRequest);
         }
 
         throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
