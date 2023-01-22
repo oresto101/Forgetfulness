@@ -25,15 +25,16 @@ public class UserService {
 
     public User save(User User) {
         if (User.isIdNotNull()) {
-            throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.USER_ALREADY_EXISTS);
         }
 
         return userRepository.save(User);
     }
 
     public void delete(Long id) {
-        if (id == null) {
-            throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.NO_USER);
         }
 
         userRepository.deleteById(id);

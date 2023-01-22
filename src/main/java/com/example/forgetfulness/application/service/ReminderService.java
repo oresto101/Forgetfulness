@@ -28,7 +28,7 @@ public class ReminderService {
 
     public Reminder save(Reminder reminder) {
         if (reminder.isIdNotNull()) {
-            throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.REMINDER_ALREADY_EXISTS);
         }
 
         reminder.setRecurrence(getOrCreateNewRecurrence(reminder.getRecurrence()));
@@ -43,7 +43,7 @@ public class ReminderService {
 
         Optional<Reminder> reminder = getReminderById(reminderRequest.getId());
         if (reminder.isEmpty()) {
-            throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.NO_REMINDER);
         }
         Recurrence oldRecurrence = reminder.get().getRecurrence();
 
@@ -59,7 +59,7 @@ public class ReminderService {
     public void delete(Long id) {
         Optional<Reminder> reminder = getReminderById(id);
         if (reminder.isEmpty()) {
-            throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.NO_REMINDER);
         }
 
         reminderRepository.delete(reminder.get());

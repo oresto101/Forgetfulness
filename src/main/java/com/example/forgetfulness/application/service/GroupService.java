@@ -25,7 +25,7 @@ public class GroupService {
 
     public Group save(Group Group) {
         if (Group.isIdNotNull()) {
-            throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.GROUP_ALREADY_EXISTS);
         }
 
         return groupRepository.save(Group);
@@ -33,7 +33,7 @@ public class GroupService {
 
     public void delete(Long id) {
         if (id == null) {
-            throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.NO_GROUP);
         }
 
         groupRepository.deleteById(id);
