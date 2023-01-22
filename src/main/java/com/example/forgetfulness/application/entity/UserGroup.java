@@ -24,4 +24,10 @@ public class UserGroup {
     @MapsId("userId")
     @JoinColumn(name = "group_id", nullable = false, insertable = false, updatable = false)
     private Group group;
+
+    public boolean isIdNull() {
+        return user == null || user.isIdNull() ||
+                group == null || group.isIdNull() ||
+                compositeId.isIdNull();
+    }
 }

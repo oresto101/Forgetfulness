@@ -17,6 +17,9 @@ public enum ForgetfulnessExceptionType {
     GROUP_ALREADY_EXISTS("User with such id already exists", HttpStatus.CONFLICT),
     REMINDER_ALREADY_EXISTS("User with such id already exists", HttpStatus.CONFLICT),
 
+    USER_IN_GROUP("User already in group", HttpStatus.CONFLICT),
+    USER_NOT_IN_GROUP("User not in group or user/group does not exist", HttpStatus.CONFLICT),
+
     USER_EMAIL_ALREADY_EXISTS("User with such email already exists", HttpStatus.CONFLICT),
 
     INCORRECT_CREDENTIALS("Incorrect email or password", HttpStatus.BAD_REQUEST);

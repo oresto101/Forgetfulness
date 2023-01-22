@@ -1,11 +1,14 @@
 package com.example.forgetfulness.api.controller;
 
+import com.example.forgetfulness.api.DTO.request.UserGroupRequest;
 import com.example.forgetfulness.api.DTO.request.UserRequest;
 import com.example.forgetfulness.api.DTO.response.UserResponse;
 import com.example.forgetfulness.application.entity.User;
 import com.example.forgetfulness.application.exception.ForgetfulnessException;
 import com.example.forgetfulness.application.exception.ForgetfulnessExceptionType;
+import com.example.forgetfulness.application.mapper.UserGroupMapper;
 import com.example.forgetfulness.application.mapper.UserMapper;
+import com.example.forgetfulness.application.service.UserGroupService;
 import com.example.forgetfulness.application.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +24,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final UserGroupService userGroupService;
     private final UserMapper userMapper;
+    private final UserGroupMapper userGroupMapper;
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getAllUsers() {
@@ -84,5 +89,23 @@ public class UserController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(userMapper.userToUserResponse(userByEmail.get()));
+    }
+
+    @PostMapping("/add/group")
+    public ResponseEntity<String> addUserToGroup(@RequestBody UserGroupRequest userGroupRequest) {
+        userGroupService.save(userGroupMapper.userGroupRequestToUserGroup(userGroupRequest));
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+    }
+
+    @PostMapping("/delete/group")
+    public ResponseEntity<String> deleteUserFromGroup(@RequestBody UserGroupRequest userGroupRequest) {
+        userGroupService.delete(userGroupMapper.userGroupRequestToUserGroup(userGroupRequest));
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
     }
 }

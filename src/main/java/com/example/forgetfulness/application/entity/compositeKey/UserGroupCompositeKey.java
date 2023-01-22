@@ -20,4 +20,8 @@ public class UserGroupCompositeKey implements Serializable {
 
     @Column(name = "group_id")
     private Long groupId;
+
+    public boolean isIdNull() {
+        return userId == null || groupId == null;
+    }
 }
