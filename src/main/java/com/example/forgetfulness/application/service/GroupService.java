@@ -8,6 +8,7 @@ import com.example.forgetfulness.application.repository.GroupRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,6 +67,15 @@ public class GroupService {
         groupRepository.save(group);
 
         reminderService.delete(reminder.get().getId());
+    }
+
+    public List<Reminder> getGroupReminders(Long groupId) {
+        if (groupId == null) {
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
+        }
+        Group group = getValidatedGroup(groupId);
+
+        return new ArrayList<>(group.getReminders());
     }
 
 

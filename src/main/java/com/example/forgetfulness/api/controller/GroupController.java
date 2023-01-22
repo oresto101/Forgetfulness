@@ -58,6 +58,7 @@ public class GroupController {
                         .build());
     }
 
+
     @PostMapping
     public ResponseEntity<GroupResponse> createGroup(@RequestBody GroupRequest groupRequest) {
         GroupResponse groupResponse = groupMapper.groupToGroupResponse(
@@ -92,6 +93,7 @@ public class GroupController {
                 .body(list);
     }
 
+
     @PostMapping("/{groupId}/add/reminder")
     public ResponseEntity<ReminderResponse> addReminderToGroup(@PathVariable("groupId") Long groupId, @RequestBody ReminderRequest reminderRequest) {
         Reminder reminder = groupService.addReminder(groupId, reminderMapper.reminderRequestToReminder(reminderRequest));
@@ -110,5 +112,16 @@ public class GroupController {
                 .build();
     }
 
-    //TODO: get reminders by group id
+    @GetMapping("/{groupId}/reminders")
+    public ResponseEntity<List<ReminderResponse>> getGroupReminders(@PathVariable("groupId") Long groupId) {
+        List<ReminderResponse> list = groupService
+                .getGroupReminders(groupId)
+                .stream()
+                .map(reminderMapper::reminderToReminderResponse)
+                .collect(Collectors.toList());
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(list);
+    }
 }
