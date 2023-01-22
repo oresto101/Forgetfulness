@@ -4,11 +4,14 @@ import com.example.forgetfulness.api.DTO.request.GroupRequest;
 import com.example.forgetfulness.api.DTO.request.ReminderRequest;
 import com.example.forgetfulness.api.DTO.response.GroupResponse;
 import com.example.forgetfulness.api.DTO.response.ReminderResponse;
+import com.example.forgetfulness.api.DTO.response.UserResponse;
 import com.example.forgetfulness.application.entity.Group;
 import com.example.forgetfulness.application.entity.Reminder;
 import com.example.forgetfulness.application.mapper.GroupMapper;
 import com.example.forgetfulness.application.mapper.ReminderMapper;
+import com.example.forgetfulness.application.mapper.UserMapper;
 import com.example.forgetfulness.application.service.GroupService;
+import com.example.forgetfulness.application.service.UserGroupService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +26,10 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class GroupController {
     private final GroupService groupService;
+    private final UserGroupService userGroupService;
     private final GroupMapper groupMapper;
     private final ReminderMapper reminderMapper;
+    private final UserMapper userMapper;
 
     @GetMapping
     public ResponseEntity<List<GroupResponse>> getAllGroups() {
@@ -74,6 +79,19 @@ public class GroupController {
                 .build();
     }
 
+    @GetMapping("/{groupId}/users")
+    public ResponseEntity<List<UserResponse>> getGroupUsers(@PathVariable("groupId") Long groupId) {
+        List<UserResponse> list = userGroupService
+                .getGroupUsers(groupId)
+                .stream()
+                .map(userMapper::userToUserResponse)
+                .collect(Collectors.toList());
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(list);
+    }
+
     @PostMapping("/{groupId}/add/reminder")
     public ResponseEntity<ReminderResponse> addReminderToGroup(@PathVariable("groupId") Long groupId, @RequestBody ReminderRequest reminderRequest) {
         Reminder reminder = groupService.addReminder(groupId, reminderMapper.reminderRequestToReminder(reminderRequest));
@@ -93,5 +111,4 @@ public class GroupController {
     }
 
     //TODO: get reminders by group id
-    //TODO: get users by group id
 }

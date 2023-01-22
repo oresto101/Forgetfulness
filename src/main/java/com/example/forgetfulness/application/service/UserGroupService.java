@@ -72,4 +72,20 @@ public class UserGroupService {
                         .orElseThrow())
                 .collect(Collectors.toList());
     }
+
+    public List<User> getGroupUsers(Long groupId) {
+        if (groupId == null) {
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
+        }
+
+        return userGroupRepository
+                .findAllByGroupId(groupId)
+                .stream()
+                .map(userGroup -> userRepository
+                        .findById(userGroup
+                                .getUser()
+                                .getId())
+                        .orElseThrow())
+                .collect(Collectors.toList());
+    }
 }
