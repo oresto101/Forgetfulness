@@ -149,7 +149,6 @@ public class UserController {
                 .build();
     }
 
-
     @GetMapping("/{userId}/reminders")
     public ResponseEntity<List<ReminderResponse>> getUserReminders(@PathVariable("userId") Long userId) {
         List<ReminderResponse> list = userService
