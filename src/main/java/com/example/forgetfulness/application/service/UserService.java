@@ -23,12 +23,17 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public User save(User User) {
-        if (User.isIdNotNull()) {
+    public User save(User userRequest) {
+        if (userRequest.isIdNotNull()) {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.USER_ALREADY_EXISTS);
         }
 
-        return userRepository.save(User);
+        Optional<User> userWithSameEmail = userRepository.findByEmail(userRequest.getEmail());
+        if (userWithSameEmail.isPresent()) {
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.USER_EMAIL_ALREADY_EXISTS);
+        }
+
+        return userRepository.save(userRequest);
     }
 
     public void delete(Long id) {
