@@ -9,8 +9,10 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface ReminderMapper {
     @Mapping(source = "period", target = "recurrence.period")
+    @Mapping(source = "time", target = "recurrence.time")
     Reminder reminderRequestToReminder(ReminderRequest reminderRequest);
 
     @Mapping(source = "recurrence.period", target = "period")
+    @Mapping(source = "recurrence.time", target = "time")
     ReminderResponse reminderToReminderResponse(Reminder reminder);
 }
