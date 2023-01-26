@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @NoArgsConstructor
@@ -13,4 +14,5 @@ public class ReminderRequest {
     private String description;
     private LocalDate date;
     private Long period;
+    private LocalTime time;
 }

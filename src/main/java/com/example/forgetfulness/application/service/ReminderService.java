@@ -68,9 +68,9 @@ public class ReminderService {
     }
 
     private Recurrence getOrCreateNewRecurrence(Recurrence recurrence) {
-        Optional<Recurrence> recurrenceExisting = recurrenceRepository.getTopByPeriod(recurrence.getPeriod());
+        Optional<Recurrence> recurrenceExisting = recurrenceRepository.getTopByPeriodAndTime(recurrence.getPeriod(), recurrence.getTime());
         if (recurrenceExisting.isEmpty()) {
-            return recurrenceRepository.save(new Recurrence(null, recurrence.getPeriod()));
+            return recurrenceRepository.save(new Recurrence(null, recurrence.getPeriod(), recurrence.getTime()));
         }
         return recurrenceExisting.get();
     }

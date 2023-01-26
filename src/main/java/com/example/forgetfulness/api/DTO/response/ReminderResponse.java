@@ -11,4 +11,5 @@ public class ReminderResponse {
     private String description;
     private String date;
     private Long period;
+    private String time;
 }
