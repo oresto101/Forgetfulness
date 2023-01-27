@@ -14,5 +14,7 @@ public interface ReminderMapper {
 
     @Mapping(source = "recurrence.period", target = "period")
     @Mapping(source = "recurrence.time", target = "time")
+    @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "group.id", target = "groupId")
     ReminderResponse reminderToReminderResponse(Reminder reminder);
 }

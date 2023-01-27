@@ -12,4 +12,6 @@ public class ReminderResponse {
     private String date;
     private Long period;
     private String time;
+    private Long userId;
+    private Long groupId;
 }

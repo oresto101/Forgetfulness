@@ -29,6 +29,12 @@ public class Reminder {
     private LocalDate date;
 
     @ManyToOne
+    private User user;
+
+    @ManyToOne
+    private Group group;
+
+    @ManyToOne
     private Recurrence recurrence;
 
     public boolean isIdNull() {

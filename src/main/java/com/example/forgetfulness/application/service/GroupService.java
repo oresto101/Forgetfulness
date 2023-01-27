@@ -43,13 +43,9 @@ public class GroupService {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
         }
 
-        Group group = getValidatedGroup(groupId);
-        Reminder reminder = reminderService.create(reminderRequest);
+        reminderRequest.setGroup(getValidatedGroup(groupId));
 
-        group.getReminders().add(reminder);
-        groupRepository.save(group);
-
-        return reminder;
+        return reminderService.create(reminderRequest);
     }
 
     public void deleteReminder(Long groupId, Long reminderId) {
@@ -57,14 +53,10 @@ public class GroupService {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
         }
 
-        Group group = getValidatedGroup(groupId);
         Optional<Reminder> reminder = reminderService.getReminderById(reminderId);
         if (reminder.isEmpty()) {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.NO_REMINDER);
         }
-
-        group.getReminders().remove(reminder.get());
-        groupRepository.save(group);
 
         reminderService.delete(reminder.get().getId());
     }
@@ -82,7 +74,7 @@ public class GroupService {
     private Group getValidatedGroup(Long id) {
         Optional<Group> group = groupRepository.findById(id);
         if (group.isEmpty()) {
-            throw new ForgetfulnessException(ForgetfulnessExceptionType.NO_USER);
+            throw new ForgetfulnessException(ForgetfulnessExceptionType.NO_GROUP);
         }
         return group.get();
     }

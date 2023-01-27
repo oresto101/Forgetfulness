@@ -52,13 +52,9 @@ public class UserService {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
         }
 
-        User user = getValidatedUser(userId);
-        Reminder reminder = reminderService.create(reminderRequest);
+        reminderRequest.setUser(getValidatedUser(userId));
 
-        user.getReminders().add(reminder);
-        userRepository.save(user);
-
-        return reminder;
+        return reminderService.create(reminderRequest);
     }
 
     public void deleteReminder(Long userId, Long reminderId) {
@@ -66,14 +62,10 @@ public class UserService {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.ID_PROBLEM);
         }
 
-        User user = getValidatedUser(userId);
         Optional<Reminder> reminder = reminderService.getReminderById(reminderId);
         if (reminder.isEmpty()) {
             throw new ForgetfulnessException(ForgetfulnessExceptionType.NO_REMINDER);
         }
-
-        user.getReminders().remove(reminder.get());
-        userRepository.save(user);
 
         reminderService.delete(reminder.get().getId());
     }

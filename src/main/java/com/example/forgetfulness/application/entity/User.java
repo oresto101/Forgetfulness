@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Table(name = "user_table")
@@ -33,8 +34,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<UserGroup> groups;
 
-    @OneToMany
-    private Set<Reminder> reminders;
+    @OneToMany(mappedBy = "user")
+    private List<Reminder> reminders;
 
     public boolean isIdNull() {
         return id == null;
