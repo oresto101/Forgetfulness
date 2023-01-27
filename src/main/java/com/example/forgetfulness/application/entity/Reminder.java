@@ -28,6 +28,20 @@ public class Reminder {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @OneToOne(mappedBy = "reminder")
+    @ManyToOne
+    private User user;
+
+    @ManyToOne
+    private Group group;
+
+    @ManyToOne
     private Recurrence recurrence;
+
+    public boolean isIdNull() {
+        return id == null;
+    }
+
+    public boolean isIdNotNull() {
+        return !isIdNull();
+    }
 }

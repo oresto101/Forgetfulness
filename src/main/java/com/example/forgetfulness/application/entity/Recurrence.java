@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalTime;
+
 @Table(name = "recurrence_table")
 @Data
 @Entity
@@ -19,7 +21,14 @@ public class Recurrence {
     @Column(name = "period")
     private Long period;
 
-    @OneToOne
-    @JoinColumn(name = "id")
-    private Reminder reminder;
+    @Column(name = "at_time")
+    private LocalTime time;
+
+    public boolean isIdNull() {
+        return id == null;
+    }
+
+    public boolean isIdNotNull() {
+        return !isIdNull();
+    }
 }
