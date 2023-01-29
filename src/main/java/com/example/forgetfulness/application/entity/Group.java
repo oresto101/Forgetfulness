@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Table(name = "group_table")
 @Data
@@ -13,19 +14,28 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Group {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "users")
-    @OneToMany
-    private List<User> users;
+    @OneToMany(mappedBy = "group")
+    private Set<UserGroup> members;
+
+    @OneToMany(mappedBy = "group")
+    private List<Reminder> reminders;
+
+    public boolean isIdNull() {
+        return id == null;
+    }
+
+    public boolean isIdNotNull() {
+        return !isIdNull();
+    }
 }

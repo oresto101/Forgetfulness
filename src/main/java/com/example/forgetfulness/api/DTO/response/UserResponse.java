@@ -1,18 +1,14 @@
-package com.example.forgetfulness.api.DTO.request;
+package com.example.forgetfulness.api.DTO.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class CreateUserRequest {
-
-    private String username;
-    private String password;
+public class UserResponse {
+    private Long id;
     private String name;
     private String surname;
     private String email;
