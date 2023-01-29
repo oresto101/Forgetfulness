@@ -1,4 +1,4 @@
-package com.example.forgetfulness.application.controller;
+package com.example.forgetfulness.api.controller;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

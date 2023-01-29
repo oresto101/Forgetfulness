@@ -1,4 +1,4 @@
-package com.example.forgetfulness.application.controller;
+package com.example.forgetfulness.api.controller;
 
 import com.example.forgetfulness.api.DTO.request.ReminderRequest;
 import com.example.forgetfulness.application.entity.Recurrence;
@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
 
-import static com.example.forgetfulness.application.controller.TestValues.*;
+import static com.example.forgetfulness.api.controller.TestValues.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class ReminderControllerIT {
+public class ReminderControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

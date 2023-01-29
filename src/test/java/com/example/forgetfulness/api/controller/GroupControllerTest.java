@@ -1,23 +1,19 @@
-package com.example.forgetfulness.application.controller;
-import static com.example.forgetfulness.application.controller.TestValues.*;
-import static com.example.forgetfulness.application.controller.TestValues.LOCAL_TIME;
+package com.example.forgetfulness.api.controller;
+import static com.example.forgetfulness.api.controller.TestValues.*;
+import static com.example.forgetfulness.api.controller.TestValues.LOCAL_TIME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.example.forgetfulness.api.DTO.request.GroupRequest;
 import com.example.forgetfulness.api.DTO.request.ReminderRequest;
-import com.example.forgetfulness.api.DTO.request.UserRequest;
-import com.example.forgetfulness.api.DTO.response.GroupResponse;
 import com.example.forgetfulness.application.entity.*;
 import com.example.forgetfulness.application.repository.GroupRepository;
 import com.example.forgetfulness.application.repository.ReminderRepository;
 import com.example.forgetfulness.application.repository.UserGroupRepository;
 import com.example.forgetfulness.application.repository.UserRepository;
 import com.example.forgetfulness.application.service.GroupService;
-import com.example.forgetfulness.application.mapper.GroupMapper;
 import com.example.forgetfulness.application.service.UserGroupService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -25,7 +21,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -38,7 +33,7 @@ import java.util.*;
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class GroupControllerIT {
+public class GroupControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
